@@ -7,25 +7,24 @@
     </v-app-bar>
 
     <v-dialog v-model="isLoading" fullscreen>
-      <v-container fluid fill-height style="background-color: rgba(255, 255, 255, 0.5);">
+      <v-container
+        fluid
+        fill-height
+        style="background-color: rgba(255, 255, 255, 0.5);"
+      >
         <v-layout justify-center align-center>
-          <v-progress-circular
-                  indeterminate
-                  color="primary">
+          <v-progress-circular indeterminate color="primary">
           </v-progress-circular>
         </v-layout>
       </v-container>
     </v-dialog>
 
     <v-content>
-        <router-view />
+      <router-view />
     </v-content>
 
     <v-footer padless>
-      <v-col
-              class="text-center"
-              cols="12"
-      >
+      <v-col class="text-center" cols="12">
         {{ new Date().getFullYear() }} — <strong>Kids Social Skills</strong>
       </v-col>
     </v-footer>
@@ -33,20 +32,16 @@
 </template>
 
 <script>
-  import { mapGetters } from 'vuex'
+import { mapGetters } from "vuex";
 
 export default {
-  name: 'App',
-  components: {
-  },
+  name: "App",
+  components: {},
   data() {
-    return {
-    }
+    return {};
   },
   computed: {
-    ...mapGetters([
-            'isLoading'
-    ])
+    ...mapGetters(["isLoading"])
   }
 };
 </script>

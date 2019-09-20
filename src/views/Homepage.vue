@@ -1,18 +1,16 @@
 <template>
-    <Game />
+  <Game />
 </template>
 
 <script>
-    import Game from '@/components/Game'
+import Game from "@/components/Game";
 
-    export default {
-        name: "Homepage",
-        components: {
-            Game
-        }
-    }
+export default {
+  name: "Homepage",
+  components: {
+    Game
+  }
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
