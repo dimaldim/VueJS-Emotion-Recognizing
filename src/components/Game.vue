@@ -14,7 +14,6 @@
                 <div v-else class="alert alert-danger fade show" role="alert">
                     It seems there is a problem with your web cam. Please check whether your web cam is working
                     and try again.
-                    </button>
                 </div>
             </div>
 
@@ -130,6 +129,7 @@
                 this.deviceId = id;
             },
             devices: function () {
+                // eslint-disable-next-line no-unused-vars
                 const [first, ...tail] = this.devices;
                 if (first) {
                     this.camera = first.deviceId;
