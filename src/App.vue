@@ -1,38 +1,52 @@
 <template>
-    <div class="container">
-        <loading :active.sync="isLoading"
-                 :can-cancel="true"
-                 loader="dots"
-                 :is-full-page="loaderFullPage"></loading>
+  <v-app>
+    <v-app-bar app>
+      <v-toolbar-title class="headline text-uppercase">
+        <span class="font-weight-light">Kids Social Skills</span>
+      </v-toolbar-title>
+    </v-app-bar>
+
+    <v-dialog v-model="isLoading" fullscreen>
+      <v-container fluid fill-height style="background-color: rgba(255, 255, 255, 0.5);">
+        <v-layout justify-center align-center>
+          <v-progress-circular
+                  indeterminate
+                  color="primary">
+          </v-progress-circular>
+        </v-layout>
+      </v-container>
+    </v-dialog>
+
+    <v-content>
         <router-view />
-    </div>
+    </v-content>
+
+    <v-footer padless>
+      <v-col
+              class="text-center"
+              cols="12"
+      >
+        {{ new Date().getFullYear() }} — <strong>Kids Social Skills</strong>
+      </v-col>
+    </v-footer>
+  </v-app>
 </template>
 
 <script>
-    import Loading from 'vue-loading-overlay';
-    import 'vue-loading-overlay/dist/vue-loading.css';
-    import { mapGetters } from 'vuex'
+  import { mapGetters } from 'vuex'
 
- export default {
-     name: 'App',
-     data() {
-         return {
-         }
-     },
-     components: {
-         Loading
-     },
-     computed: {
-         ...mapGetters([
-             'isLoading'
-         ])
-     }
- }
-</script>
-
-<style>
-    body {
-        padding: 0;
-        margin: 0;
+export default {
+  name: 'App',
+  components: {
+  },
+  data() {
+    return {
     }
-</style>
+  },
+  computed: {
+    ...mapGetters([
+            'isLoading'
+    ])
+  }
+};
+</script>

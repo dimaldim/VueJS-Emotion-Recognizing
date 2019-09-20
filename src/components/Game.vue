@@ -1,80 +1,80 @@
 <template>
-    <div>
-    <div class="row">
-        <div class="col-md-6">
-            <h2>Camera:</h2>
+    <v-container>
+        <v-row v-if="error">
+            <v-col>
+                <v-alert
+                        outlined
+                        type="error"
+                        prominent
+                        border="left"
+                >
+                    It seems there is a problem with your web cam. Please check whether your web cam is working
+                    and try again.
+                </v-alert>
+            </v-col>
+        </v-row>
+        <v-row v-else>
+            <v-col>
             <code v-if="device">{{ device.label }}</code>
-            <div class="border">
                 <vue-web-cam v-if="!error" ref="webcam"
                              :device-id="deviceId"
                              width="100%"
                              @error="onError"
                              @cameras="onCameras"
                              @camera-change="onCameraChange"/>
-                <div v-else class="alert alert-danger fade show" role="alert">
-                    It seems there is a problem with your web cam. Please check whether your web cam is working
-                    and try again.
-                </div>
-            </div>
 
-            <div class="row">
-                <div class="col-md-12">
-                    <select v-model="camera" class="form-control mt-2 mb-2">
-                        <option>-- Select Device --</option>
-                        <option v-for="device in devices"
-                                :key="device.deviceId"
-                                :value="device.deviceId">{{ device.label }}
-                        </option>
-                    </select>
-                </div>
-                <div class="col-md-12 text-center">
-                    <button type="button"
-                            class="btn btn-primary mr-2"
-                            :disabled="error"
-                            @click="onCapture">Capture Photo
-                    </button>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <h2>Captured Image</h2>
-            <figure class="figure">
-                <img id="my_img" :src="img" class="img-fluid">
-            </figure>
-        </div>
-    </div>
+                <v-select
+                        :items="devices"
+                        v-model="camera"
+                        label="Select Device"
+                        item-text="label"
+                        item-value="deviceId"
+                ></v-select>
 
-    <div class="row" v-if="myExpressionError">
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            {{ myExpressionError }}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    </div>
-
-    <div class="row" v-if="myExpression.length && !myExpressionError.length">
-        <div class="col-md-12 text-center">
-            <h2>Ok, can you guess the emotion?</h2>
-            <div v-if="userAnswer.length" :class="userAnswerClass" role="alert">
-                <span v-if="isAnswerRight">
+                <div class="text-center">
+                <v-btn
+                        small
+                        color="primary"
+                        @click="onCapture"
+                        :disabled="error !== null"
+                >Capture photo</v-btn>
+                </div>
+            </v-col>
+        </v-row>
+        <v-row>
+            <v-col>
+                <v-img :src="img"></v-img>
+                <img :src="img" id="my_img" style="display: none;" />
+            </v-col>
+        </v-row>
+        <v-row v-if="myExpressionError.length">
+            <v-col>
+            <v-alert type="info">
+                {{ myExpressionError }}
+            </v-alert>
+            </v-col>
+        </v-row>
+        <v-row v-if="myExpression.length && !myExpressionError.length">
+            <v-col>
+                <h2>Ok, can you guess the emotion?</h2>
+                <v-alert type="success" v-if="isAnswerRight && userAnswer.length">
                     Yes, I’m {{ userAnswer }}. Can you make the same face?
-                </span>
-                <span v-else>
+                </v-alert>
+                <v-alert type="error" v-if="!isAnswerRight && userAnswer.length">
                     Sorry, but I'm not {{ userAnswer }}. Please try again.
-                </span>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-                <button @click="checkEmotion('happy')" class="btn btn-primary mr-2">Happy</button>
-                <button @click="checkEmotion('angry')" class="btn btn-primary mr-2">Angry</button>
-                <button @click="checkEmotion('sad')" class="btn btn-primary mr-2">SAD</button>
-                <button @click="checkEmotion('surprised')" class="btn btn-primary mr-2">Surprised</button>
-                <button @click="checkEmotion('neutral')" class="btn btn-primary mr-2">Neutral</button>
-        </div>
-    </div>
-    </div>
+                </v-alert>
+            </v-col>
+        </v-row>
+        <v-row v-if="myExpression.length && !myExpressionError.length">
+            <v-col>
+                <v-btn small color="primary" class="mr-1" @click="checkEmotion('happy')">Happy</v-btn>
+                <v-btn small color="primary" class="mr-1" @click="checkEmotion('angry')">Angry</v-btn>
+                <v-btn small color="primary" class="mr-1" @click="checkEmotion('sad')">SAD</v-btn>
+                <v-btn small color="primary" class="mr-1" @click="checkEmotion('surprised')">Surprised</v-btn>
+                <v-btn small color="primary" class="mr-1" @click="checkEmotion('neutral')">Neutral</v-btn>
+            </v-col>
+        </v-row>
+    </v-container>
 </template>
 
 <script>
@@ -89,7 +89,7 @@
         },
         data() {
             return {
-                img: null,
+                img: '',
                 camera: null,
                 deviceId: null,
                 devices: [],
