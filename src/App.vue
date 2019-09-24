@@ -1,9 +1,8 @@
 <template>
   <v-app>
-    <v-app-bar app>
-      <v-toolbar-title class="headline text-uppercase">
-        <span class="font-weight-light">Kids Social Skills</span>
-      </v-toolbar-title>
+    <v-app-bar hide-on-scroll absolute height="180" app>
+      <v-img class="mx-2" src="img/logo.jpg" max-width="150" contain></v-img>
+      <v-toolbar-title class="headline text-uppercase"></v-toolbar-title>
     </v-app-bar>
 
     <v-dialog v-model="isLoading" fullscreen>
